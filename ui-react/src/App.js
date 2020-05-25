@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router";
-
-import UserList from "./UserList";
+import Login from "./components/Login";
+import UserList from "./components/UserList";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <React.Fragment>
         <Switch>
           <Route exact path="/" component={UserList} />
+          <Route exact path="/login" component={Login} />
         </Switch>
       </React.Fragment>
     );

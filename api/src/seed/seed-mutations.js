@@ -1,8 +1,8 @@
 export default /* GraphQL */ `
   mutation {
-    u1: CreateUser(id: "u1", name: "Hakan") {
-      id
+    User: CreateUser(name: "Hakan", email: "hakan.ergin@gmail.com") {
       name
+      email
     }
   }
 `;

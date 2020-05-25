@@ -5,8 +5,8 @@ import gql from "graphql-tag";
 const GET_USER = gql`
   query {
     User {
-      id
       name
+      email
     }
   }
 `;
@@ -18,8 +18,8 @@ function UserList(props) {
     <div>
       {data && !loading && !error && (
         <div>
-          {data.User.map(n => {
-            return <div key={n.id}>Hello {n.name}</div>;
+          {data.User.map((n, index) => {
+            return <div key={index}>Hello {n.name}</div>;
           })}
         </div>
       )}

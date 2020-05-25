@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/react-common";
 import { BrowserRouter } from "react-router-dom";
 
 const client = new ApolloClient({
