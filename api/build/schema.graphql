@@ -1,45 +1,30 @@
 type User {
   id: ID!
-  name: String
-  friends: [User] @relation(name: "FRIENDS", direction: "BOTH")
-  reviews: [Review] @relation(name: "WROTE", direction: "OUT")
-  avgStars: Float
-    @cypher(
-      statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN toFloat(avg(r.stars))"
-    )
-  numReviews: Int
-    @cypher(statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN COUNT(r)")
-  recommendations(first: Int = 3): [Business] @cypher(statement: "MATCH (this)-[:WROTE]->(r:Review)-[:REVIEWS]->(:Business)<-[:REVIEWS]-(:Review)<-[:WROTE]-(:User)-[:WROTE]->(:Review)-[:REVIEWS]->(rec:Business) WHERE NOT EXISTS( (this)-[:WROTE]->(:Review)-[:REVIEWS]->(rec) )WITH rec, COUNT(*) AS num ORDER BY num DESC LIMIT $first RETURN rec")
-}
-
-type Business {
-  id: ID!
-  name: String
-  address: String
-  city: String
-  state: String
-  avgStars: Float @cypher(statement: "MATCH (this)<-[:REVIEWS]-(r:Review) RETURN coalesce(avg(r.stars),0.0)")
-  reviews: [Review] @relation(name: "REVIEWS", direction: "IN")
-  categories: [Category] @relation(name: "IN_CATEGORY", direction: "OUT")
-}
-
-type Review {
-  id: ID!
-  stars: Int
-  text: String
-  date: Date
-  business: Business @relation(name: "REVIEWS", direction: "OUT")
-  user: User @relation(name: "WROTE", direction: "IN")
-}
-
-type Category {
-  name: ID!
-  businesses: [Business] @relation(name: "IN_CATEGORY", direction: "IN")
+  email: String!
 }
 
 type Query {
-  usersBySubstring(substring: String): [User]
+  currentUser: User
     @cypher(
-      statement: "MATCH (u:User) WHERE u.name CONTAINS $substring RETURN u"
+      statement: "MATCH (u:User {id: $user}) WITH { id: u.id, email: u.email} as User RETURN User"
+    )
+  users: [User!]
+    @cypher(
+      statement: "MATCH (u:User) WITH { id: u.id, email: u.email} as User RETURN User"
+    )
+  user(id: ID!): User
+    @cypher(
+      statement: "MATCH (u:User) WHERE u.id = $id WITH { id: u.id, email: u.email} as User RETURN User"
+    )
+}
+
+type Mutation {
+  RegisterUser(email: String!, password: String!): User!
+    @cypher(
+      statement: "CALL apoc.create.uuids(1) YIELD uuid CREATE (l:LOCAL_ACCOUNT {password: $password, email: $email})<-[:AUTHENTICATED_WITH]-(u:User {email: $email, id: uuid}) RETURN u"
+    )
+  Login(email: String!, password: String!): String
+    @cypher(
+      statement: "MATCH (u:User {email: $email})-[:AUTHENTICATED_WITH]->(l:LOCAL_ACCOUNT {email: $email}) WITH { id: u.id, password: l.password} as LoginInfo RETURN LoginInfo"
     )
 }
