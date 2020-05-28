@@ -8,8 +8,7 @@
     "start-dev": "./node_modules/.bin/nodemon --watch src --ext js,graphql --exec babel-node  src/index.js",
     "build": "babel src -d build && shx cp .env build && shx cp src/schema.graphql build",
     "now-build": "babel src -d build && shx cp src/schema.graphql build",
-    "start": "npm run build && node build/index.js",
-    "seedDb": "./node_modules/.bin/babel-node src/seed/seed-db.js"
+    "start": "npm run build && node build/index.js"
   },
   "author": "William Lyon",
   "license": "MIT",
@@ -19,8 +18,11 @@
     "apollo-client": "^2.6.4",
     "apollo-link-http": "^1.5.15",
     "apollo-server": "^2.8.2",
+    "bcrypt": "^4.0.1",
     "dotenv": "^7.0.0",
     "graphql-tag": "^2.10.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
     "neo4j-driver": "^4.0.1",
     "neo4j-graphql-js": "^2.12.1",
     "node-fetch": "^2.6.0"

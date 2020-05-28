@@ -4,15 +4,20 @@ import express from 'express';
 import neo4j from 'neo4j-driver';
 import { makeAugmentedSchema } from 'neo4j-graphql-js';
 import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import { resolvers } from './resolvers';
 
-// set environment variables from ../.env
 dotenv.config();
-
+const SECRET = process.env.JWT_SECRET || '';
 const app = express();
 
 const schema = makeAugmentedSchema({
   typeDefs,
-  context: ({ req, res }) => ({ req, res }),
+  resolvers,
+  config: {
+    query: false,
+    mutation: false,
+  },
 });
 
 const driver = neo4j.driver(
@@ -23,11 +28,22 @@ const driver = neo4j.driver(
   )
 );
 
+const injectUser = async (req) => {
+  const token = req.headers.authorization;
+  try {
+    const { user } = await jwt.verify(token, SECRET);
+    req.user = user;
+  } catch (error) {
+    console.error(error);
+  }
+  req.next();
+};
+
+app.use(injectUser);
+
 const server = new ApolloServer({
-  context: { driver },
-  schema: schema,
-  introspection: true,
-  playground: true,
+  context: ({ req }) => ({ driver, SECRET, user: req.user || null }),
+  schema,
 });
 
 const port = process.env.GRAPHQL_LISTEN_PORT || 4001;
