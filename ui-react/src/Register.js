@@ -1,19 +1,18 @@
-import React, { Fragment } from "react";
-import gql from "graphql-tag";
-import { Redirect } from "react-router-dom";
-import { Mutation } from "react-apollo";
-import { Formik, Field, ErrorMessage } from "formik";
-import injectSheet from "react-jss";
-import cx from "classnames";
+import React, { Fragment } from 'react';
+import gql from 'graphql-tag';
+import { Redirect } from 'react-router-dom';
+import { Mutation } from 'react-apollo';
+import { Formik, Field, ErrorMessage } from 'formik';
+import injectSheet from 'react-jss';
 
-import { FORM_INPUTS } from "./constants/styleConstants";
-import { colors } from "./constants/colors";
-import { RegisterValidation } from "./form-validation/login";
+import { FORM_INPUTS } from './constants/styleConstants';
+import { colors } from './constants/colors';
+import { RegisterValidation } from './form-validation/login';
 
 const styles = {
   loginContainer: {
     width: 400,
-    margin: [0, "auto"]
+    margin: [0, 'auto'],
   },
   header: {
     fontSize: 48,
@@ -21,16 +20,16 @@ const styles = {
     color: colors.orange,
     fontWeight: 200,
     marginTop: 0,
-    textAlign: "center",
-    letterSpacing: 5
+    textAlign: 'center',
+    letterSpacing: 5,
   },
   centeredContainer: {
-    display: "flex",
+    display: 'flex',
     flex: [1, 0, 0],
-    alignItems: "center",
-    flexDirection: "column"
+    alignItems: 'center',
+    flexDirection: 'column',
   },
-  ...FORM_INPUTS
+  ...FORM_INPUTS,
 };
 
 const REGISTER = gql`
@@ -48,25 +47,25 @@ const Register = ({ classes }) => {
       <Mutation mutation={REGISTER}>
         {(RegisterUser, { data }) => {
           if (data && !!data.RegisterUser.id) {
-            return <Redirect to={{ pathname: "/login" }} />;
+            return <Redirect to={{ pathname: '/login' }} />;
           }
 
           return (
             <Fragment>
               <Formik
                 initialValues={{
-                  email: "",
-                  password: "",
-                  confirmPassword: ""
+                  email: '',
+                  password: '',
+                  confirmPassword: '',
                 }}
                 onSubmit={({ email, password }) => {
                   RegisterUser({
-                    variables: { email, password }
+                    variables: { email, password },
                   });
                 }}
                 validationSchema={RegisterValidation}
               >
-                {props => (
+                {(props) => (
                   <form
                     onSubmit={props.handleSubmit}
                     className={classes.centeredContainer}
@@ -107,20 +106,6 @@ const Register = ({ classes }) => {
                   </form>
                 )}
               </Formik>
-              <div
-                className={cx(
-                  classes.centeredContainer,
-                  classes.oauthContainer
-                )}
-              >
-                <div>- OR - </div>
-                <a
-                  href={process.env.FB_AUTH_URI}
-                  className={cx(classes.button, classes.facebookLogin)}
-                >
-                  <i className="fab fa-facebook-f" /> Register with Facebook
-                </a>
-              </div>
             </Fragment>
           );
         }}
