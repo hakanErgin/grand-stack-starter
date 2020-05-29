@@ -101,8 +101,10 @@ const Register = ({ classes }) => {
                       <ErrorMessage name="confirmPassword" />
                     </label>
                     <button type="submit" className={classes.button}>
-                      Register
+                      Submit
                     </button>
+                    <br />
+                    <a href="/login">Go to login</a>
                   </form>
                 )}
               </Formik>
