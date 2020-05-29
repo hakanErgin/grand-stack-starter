@@ -5,9 +5,9 @@ import { Mutation } from 'react-apollo';
 import { Formik, Field, ErrorMessage } from 'formik';
 import injectSheet from 'react-jss';
 
-import { FORM_INPUTS } from './constants/styleConstants';
-import { colors } from './constants/colors';
-import { RegisterValidation } from './form-validation/login';
+import { FORM_INPUTS } from '../constants/styleConstants';
+import { colors } from '../constants/colors';
+import { RegisterValidation } from '../form-validation/login';
 
 const styles = {
   loginContainer: {

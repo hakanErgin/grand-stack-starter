@@ -1,14 +1,14 @@
-import React from "react";
-import { BUTTON } from "./constants/styleConstants";
-import injectSheet from "react-jss";
+import React from 'react';
+import { BUTTON } from '../constants/styleConstants';
+import injectSheet from 'react-jss';
 
 const styles = {
-  ...BUTTON
+  ...BUTTON,
 };
 
 const submitLogout = () => {
-  localStorage.removeItem("token");
-  window.location.href = "/";
+  localStorage.removeItem('token');
+  window.location.href = '/';
 };
 
 const Logout = ({ classes, containerClass }) => (

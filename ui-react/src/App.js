@@ -8,8 +8,8 @@ import { ApolloProvider } from 'react-apollo';
 import injectSheet from 'react-jss';
 
 import Home from './Home';
-import Login from './Login';
-import Register from './Register';
+import Login from './components/Login';
+import Register from './components/Register';
 import { colors } from './constants/colors';
 
 const styles = {

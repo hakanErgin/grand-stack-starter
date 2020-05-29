@@ -6,9 +6,9 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import injectSheet from 'react-jss';
 import { isNil } from 'lodash';
 
-import { LoginValidation } from './form-validation/login';
-import { FORM_INPUTS } from './constants/styleConstants';
-import { colors } from './constants/colors';
+import { LoginValidation } from '../form-validation/login';
+import { FORM_INPUTS } from '../constants/styleConstants';
+import { colors } from '../constants/colors';
 
 const styles = {
   loginContainer: {
