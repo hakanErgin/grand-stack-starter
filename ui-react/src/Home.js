@@ -1,38 +1,38 @@
-import React, { Fragment } from "react";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import injectSheet from "react-jss";
-import { colors } from "./constants/colors";
+import React, { Fragment } from 'react';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+import injectSheet from 'react-jss';
+import { colors } from './constants/colors';
 
-import Logout from "./Logout";
+import Logout from './components/Logout';
 
 const styles = {
   header: {
-    width: "100%",
-    position: "absolute",
+    width: '100%',
+    position: 'absolute',
     top: 0,
     left: 0,
-    background: "#f1f1f1",
+    background: '#f1f1f1',
     color: colors.black,
-    display: "flex",
-    alignItems: "center"
+    display: 'flex',
+    alignItems: 'center',
   },
   container: {
     width: 600,
-    margin: [0, "auto"],
-    color: colors.orange
+    margin: [0, 'auto'],
+    color: colors.orange,
   },
   logo: {
-    display: "inline-block",
-    padding: [20, 80]
+    display: 'inline-block',
+    padding: [20, 80],
   },
   heading: {
-    color: colors.green
+    color: colors.green,
   },
   logoutButton: {
-    position: "absolute",
-    right: 80
-  }
+    position: 'absolute',
+    right: 80,
+  },
 };
 
 const GET_USERS = gql`
@@ -55,7 +55,7 @@ const Home = ({ classes }) => {
       </header>
       <Query query={GET_USERS}>
         {({ loading, error, data }) => {
-          if (loading) return "Loading...";
+          if (loading) return 'Loading...';
           if (error) return `Error! ${error.message}`;
 
           return (
@@ -65,7 +65,7 @@ const Home = ({ classes }) => {
                 users:
               </h2>
               <ul>
-                {data.users.map(user => (
+                {data.users.map((user) => (
                   <li key={user.email}>{user.email}</li>
                 ))}
               </ul>
