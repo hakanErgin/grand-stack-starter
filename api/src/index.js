@@ -8,7 +8,9 @@ import jwt from 'jsonwebtoken';
 import { resolvers } from './resolvers';
 
 dotenv.config();
-const SECRET = process.env.JWT_SECRET || '';
+const SECRET =
+  process.env.JWT_SECRET ||
+  'ybeFQvInmcfB2xcjdbGtRosdfME_zMQmFkpFNH6vDyG3Skb23NKA1uN91DB0ZK6c28cHgUNHyOdjUBM-VxsZpuejHZXeTMn46M99Vb5_01pDISTgIu8vxdmtOVlRN-zy5TM60zZfFgFh4J-DsUy3H_jOoRd3ofVwKXMZ4hiYsUk';
 const app = express();
 
 const schema = makeAugmentedSchema({
