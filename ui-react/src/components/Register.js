@@ -33,8 +33,8 @@ const styles = {
 };
 
 const REGISTER = gql`
-  mutation RegisterMutation($email: String!, $password: String!) {
-    RegisterUser(email: $email, password: $password) {
+  mutation Register($email: String!, $password: String!) {
+    Register(email: $email, password: $password) {
       id
     }
   }
@@ -45,8 +45,8 @@ const Register = ({ classes }) => {
     <div className={classes.loginContainer}>
       <h1 className={classes.header}>Register</h1>
       <Mutation mutation={REGISTER}>
-        {(RegisterUser, { data }) => {
-          if (data && !!data.RegisterUser.id) {
+        {(Register, { data }) => {
+          if (data && !!data.Register.id) {
             return <Redirect to={{ pathname: '/login' }} />;
           }
 
@@ -59,7 +59,7 @@ const Register = ({ classes }) => {
                   confirmPassword: '',
                 }}
                 onSubmit={({ email, password }) => {
-                  RegisterUser({
+                  Register({
                     variables: { email, password },
                   });
                 }}

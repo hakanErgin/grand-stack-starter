@@ -5,7 +5,7 @@ import { createToken } from './auth/auth';
 
 export const resolvers = {
   Mutation: {
-    RegisterUser: async (object, params, context, resolveInfo) => {
+    Register: async (object, params, context, resolveInfo) => {
       const user = params;
       user.password = await bcrypt.hash(user.password, 12);
       return neo4jgraphql(object, user, context, resolveInfo, true);
